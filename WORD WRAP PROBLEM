@@ -1,0 +1,112 @@
+
+WORD WRAP
+//---------------------------_WORD WRAP PROBLEM-------------------------------------------------------------------------------
+
+Given an array of size N, which denotes the number of characters in one word. The task is simple, count the number of words in a single line with space character between two words.
+
+Input:
+First line contains the number of test cases T. First line of every test case consists of N, denoting number of elements in array. Second line consists of elements in array. Third line consists of characters allowed per line.
+
+Output:
+Single line output,print 2*L spaced integers (where L is the number of lines required to adjust the words with given limit of character per line), denoting from which word to word in every line.(for more clearance of output, look the output in example).
+
+Constraints:
+1<=T<=100
+1<=N<=100
+
+Example:
+Input:
+2
+4
+3 2 2 5
+6
+3
+3 2 2
+4
+Output:
+1 1 2 3 4 4 
+1 1 2 2 3 3 
+
+
+
+//-----------------------------------------------------Solution-------------------------------------------------------------
+
+
+
+#include <iostream>
+#include<bits/stdc++.h>
+//#define INF infinity()
+
+using namespace std;
+int INF=999999;
+int printP(int PA[],int n){
+    int k;
+    if(PA[n]==1)
+        k==1;
+    else 
+        k=printP(PA,PA[n]-1)+1;
+    cout<<PA[n]<<" "<<n<<" ";
+    return k;
+}
+
+
+int WWRP(int A[],int n,int m){
+    int arrange[n+1][n+1];
+    int Cost[n+1][n+1];
+    int C[n+1];
+    int P[n+1];
+    int i,j;
+    //Intial aarangement;
+    for(i=1;i<=n;i++){
+        arrange[i][i]=m-A[i-1];
+        for(j=i+1;j<=n;j++){
+            arrange[i][j]=arrange[i][j-1]-A[j-1]-1;
+        }
+    }
+    //Cost Calculation
+    for(i=1;i<=n;i++){
+        for(j=i;j<=n;j++){
+            if(arrange[i][j]<0)
+                Cost[i][j]=INF;
+            else if(j==n && arrange[i][j]>=0)
+                Cost[i][j]=0;
+            else 
+                Cost[i][j]= arrange[i][j]*arrange[i][j];
+        }
+    }
+    
+    //Cost Optimization
+    C[0]=0;
+    for(j=1;j<=n;j++){
+        C[j]=INF;
+        for(i=1;i<=j;i++){
+            if(C[i-1]!=INF && Cost[i][j]!=INF && (C[i-1]+Cost[i][j])<C[j]){
+                C[j]=C[i-1]+Cost[i][j];
+                P[j]=i;
+            }
+        }
+    }
+    // Printing    
+    printP(P,n);
+    
+    
+}
+
+
+int main() {
+	int test;
+	cin>>test;
+	while(test--){
+	    int n,Arr[101],i,m;
+	    cin>>n;
+	    for(i=0;i<n;i++){
+	        cin>>Arr[i];
+	    }
+	    cin>>m;
+	    WWRP(Arr,n,m);
+	    cout<<endl;
+	    
+	    
+	}
+	return 0;
+}
