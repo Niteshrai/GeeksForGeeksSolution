@@ -8,3 +8,5 @@ Geeks Solution
 3. Word Wrap Problem
 4. Subset(Lexicographi order)
 5. Source to distination shortest Path(using BFS)
+6. Delete nodes having greater value on right
+
